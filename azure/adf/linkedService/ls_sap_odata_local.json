@@ -1,0 +1,13 @@
+{
+  "type": "HttpServer",
+  "typeProperties": {
+    "url": "http://172.24.34.50:5000",
+    "enableServerCertificateValidation": false,
+    "authenticationType": "Anonymous"
+  },
+  "connectVia": {
+    "referenceName": "shir-sap-local",
+    "type": "IntegrationRuntimeReference"
+  }
+}
+

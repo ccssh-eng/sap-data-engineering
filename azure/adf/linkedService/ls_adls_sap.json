@@ -1,0 +1,8 @@
+{
+  "type": "AzureBlobFS",
+  "typeProperties": {
+    "url": "https://stsapdata778c25.dfs.core.windows.net"
+  },
+  "authenticationType": "ManagedIdentity"
+}
+

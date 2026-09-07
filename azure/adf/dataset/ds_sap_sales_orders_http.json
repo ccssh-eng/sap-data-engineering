@@ -1,0 +1,13 @@
+{
+  "linkedServiceName": {
+    "referenceName": "ls_sap_odata_local",
+    "type": "LinkedServiceReference"
+  },
+  "type": "HttpFile",
+  "typeProperties": {
+    "relativeUrl": "odata/SalesOrder",
+    "requestMethod": "GET"
+  },
+  "schema": []
+}
+

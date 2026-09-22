@@ -2,7 +2,7 @@ resource "azurerm_key_vault" "sap_data" {
   name                = "kv-sap-data-7cc1d2"
   location            = azurerm_resource_group.sap_data_platform.location
   resource_group_name = azurerm_resource_group.sap_data_platform.name
-  tenant_id           = "38c482a3-9673-4119-bf8a-0c258bab2484"
+  tenant_id           = data.azurerm_client_config.current.tenant_id
 
   sku_name = "standard"
 

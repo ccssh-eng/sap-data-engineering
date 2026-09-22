@@ -2570,71 +2570,7 @@ Ils ne doivent pas être présentés comme déjà déployés dans le LAB.
 
 ---
 
-# 127. Question d'entretien : authentification ou autorisation ?
-
-Réponse :
-
-> L'authentification vérifie l'identité du workload ou de l'utilisateur. L'autorisation détermine ensuite ce que cette identité peut faire. Par exemple, ADF possède une Managed Identity pour s'authentifier auprès d'Azure, puis le rôle Storage Blob Data Contributor lui donne l'autorisation d'écrire dans ADLS.
-
----
-
-# 128. Question d'entretien : Managed Identity ou Key Vault ?
-
-Réponse :
-
-> J'utilise Managed Identity lorsque le service peut s'authentifier directement sans secret. Key Vault intervient lorsqu'un secret, une clé ou un certificat reste nécessaire. Une Managed Identity peut d'ailleurs être utilisée pour autoriser l'application à lire un secret dans Key Vault.
-
----
-
-# 129. Question d'entretien : Azure RBAC ou Unity Catalog ?
-
-Réponse :
-
-> Azure RBAC autorise l'identité Azure de Databricks à accéder physiquement au stockage ADLS. Unity Catalog ajoute ensuite la gouvernance Databricks sur les objets et les emplacements de données. Ce sont deux couches complémentaires.
-
----
-
-# 130. Question d'entretien : pourquoi l'Access Connector ?
-
-Réponse :
-
-> L'Access Connector fournit une identité Azure dédiée que Databricks peut utiliser avec Unity Catalog pour accéder à ADLS. Cette identité reçoit les permissions RBAC nécessaires, puis elle est référencée par le Storage Credential.
-
----
-
-# 131. Question d'entretien : pourquoi éviter les Storage Keys ?
-
-Réponse :
-
-> Une Storage Account Key est un credential puissant et persistant qu'il faut stocker et faire tourner. Lorsque possible, je préfère Managed Identity avec Azure RBAC, qui permet une authentification par identité et des permissions mieux délimitées.
-
----
-
-# 132. Question d'entretien : comment sécuriser Terraform ?
-
-Réponse :
-
-> Je n'enregistre pas le state ni les fichiers contenant des secrets dans Git. En production, j'utiliserais un backend distant sécurisé avec RBAC et locking, une identité de workload pour le CI/CD, une revue du plan avant apply et des protections renforcées pour les destructions.
-
----
-
-# 133. Question d'entretien : comment sécuriser Azure SQL ?
-
-Réponse :
-
-> Je privilégie Microsoft Entra et une identité de workload, des permissions SQL minimales, puis en production un Private Endpoint, Private DNS, un accès public désactivé ou fortement restreint, des logs d'audit et du monitoring.
-
----
-
-# 134. Question d'entretien : que protège un Management Lock ?
-
-Réponse :
-
-> Un Management Lock protège contre certaines suppressions ou modifications accidentelles selon son type. Il ne remplace ni l'authentification ni RBAC. Il fait partie d'une stratégie de défense en profondeur pour le cycle de vie des ressources.
-
----
-
-# 135. Architecture de sécurité finale
+# 127. Architecture de sécurité finale
 
 ```text
                          MICROSOFT ENTRA ID
@@ -2673,7 +2609,7 @@ Réponse :
 
 ---
 
-# 136. Modèle de défense en profondeur
+# 128. Modèle de défense en profondeur
 
 ```text
 IDENTITY
@@ -2725,7 +2661,7 @@ CI/CD approvals
 
 ---
 
-# 137. Résultat
+# 129. Résultat
 
 Le projet ne repose donc pas sur :
 
@@ -2738,33 +2674,26 @@ pour connecter tous les composants.
 Il utilise plusieurs identités et mécanismes spécialisés :
 
 ```text
-ADF
-→ Managed Identity
+ADF → Managed Identity
 
-Databricks
-→ Access Connector + Managed Identity
+Databricks → Access Connector + Managed Identity
 
-ADLS
-→ Azure RBAC
+ADLS → Azure RBAC
 
-Databricks Data Governance
-→ Unity Catalog
+Databricks Data Governance → Unity Catalog
 
-Azure SQL
-→ Microsoft Entra
+Azure SQL → Microsoft Entra
 
-Secrets éventuels
-→ Key Vault
+Secrets éventuels → Key Vault
 
-Infrastructure
-→ Terraform
+Infrastructure → Terraform
 ```
 
 Cette séparation réduit le couplage entre les credentials et le code applicatif.
 
 ---
 
-# 138. Conclusion
+# 130. Conclusion
 
 La sécurité de la plateforme est construite autour du principe :
 

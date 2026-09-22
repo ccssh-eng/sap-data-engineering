@@ -2735,6 +2735,6 @@ Policy as Code
 Governance as Code
 ```
 
-Le chapitre suivant est consacré à **Terraform et à la transformation d'une infrastructure Azure Brownfield en Infrastructure as Code reproductible**.
+                                    ***************************************
 
 
